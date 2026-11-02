@@ -1,34 +1,44 @@
-# satisfying-videos-videos
+# satisfying-videos
 
-Repository public pour les vidéos générées par l'algorithme **bouncing_balls_v4**.
+Repository pour la génération de vidéos animées avec algorithme de physique réaliste.
 
-## Algorithme
+## Architecture
 
-**bouncing_balls_v4.py** — Une seule balle dans un cercle, physique réaliste :
-- Gravité + coefficient de restitution (>1 pour récupérer de l'énergie à chaque rebond)
-- La balle rebondit sur le BORD du cercle (contact boule-cercle) sans jamais le traverser
-- Fond noir, générations satisfaisantes et addictives
+### Python
+- `python/bouncing_ball.py` — Algorithme de calcul physique
+- `python/generate_data.py` — Script de génération de la trace
+
+### HTML / Canvas
+- `html/animation.html` — Animation dans un canvas
+
+### Hyperframes
+- `my-video/` — Projet hyperframes pour la génération vidéo
+  - `index.html` — Composition HTML avec l'animation
+  - `video.mp4` — Vidéo générée
+  - `frames/` — Frames intermédiaires
+  - `trace.json` — Données de trace pour l'animation
 
 ## Génération
 
-Voir le repo [satisfying-videos](https://github.com/HermesThomas/satisfying-videos) pour le code source et les instructions de génération.
-
-### Commande
+### Avec hyperframes
 
 ```bash
-python generate.py --config config/bouncing_ball_v4_seed_101.json --output videos/bouncing_ball_v4_seed_101.mp4
+cd my-video
+npx hyperframes render
 ```
 
-### Vidéos disponibles
+### Avec Python
 
-- `bouncing_ball_v4_seed_101.mp4` — Cercle bleu `#3b82f6`, balle rouge `#ef4444`
-- `bouncing_ball_v4_seed_202.mp4` — Cercle vert `#22c55e`, balle bleue `#3b82f6`
-- `bouncing_ball_v4_seed_303.mp4` — Cercle jaune `#f59e0b`, balle pourpre `#a855f7`
+```bash
+python generate_data.py --config config/bouncing_ball_v4.json --output trace.json
+```
 
-## Validation
+## Structure
 
-La trace de la balle (positions à chaque frame) est enregistrée dans `logs/coord_log.json`. Le fichier `test_v4_physics.py` vérifie que la balle ne traverse pas le cercle.
-
-## Licence
-
-Code source dans le repo [satisfying-videos](https://github.com/HermesThomas/satisfying-videos) (private), vidéos dans ce repo (public).
+- `my-video/index.html` — Composition hyperframes
+- `my-video/video.mp4` — Vidéo générée
+- `my-video/frames/` — Frames PNG (debug)
+- `config/bouncing_ball_v4.json` — Configuration de l'algorithme
+- `html/animation.html` — Animation canvas
+- `python/bouncing_ball.py` — Algorithme de physique
+- `python/generate_data.py` — Générateur de trace
